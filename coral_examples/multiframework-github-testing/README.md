@@ -1,6 +1,6 @@
-# Software Testing Agents with LangChain
+# Software Testing Agents with LangChain, Camel, and Crew.
 
-This example demonstrates a multi-agent software testing system built using LangChain and the Coral Protocol. Agents collaborate to fetch, analyze, and test pull requests (PRs) against existing unit tests in any compatible GitHub repository.
+This example demonstrates a multi-agent software testing system built using Coral Protocol with 3 different frameworks' agents -- LangChain, Camel, and Crew. Agents collaborate to fetch, analyze, and test pull requests (PRs) against existing unit tests in any compatible GitHub repository.
 
 Compared to the earlier version, this implementation is more general: it supports running tests on PRs from much various repositories. For example, you can use it to test PRs from your own forked repositories such as [https://github.com/renxinxing123/camel-software-testing](https://github.com/renxinxing123/camel-software-testing). The system is designed as a minimal but extensible prototype, and it can be adapted to handle more complex codebases.
 
@@ -10,18 +10,18 @@ Compared to the earlier version, this implementation is more general: it support
 
 The system consists of four cooperating agents, each with a specific responsibility:
 
-* **Interface Agent**
+* **Interface Agent (Implemented using LangChain)**
   Accepts user instructions, manages the workflow, and coordinates other agents.
 
-* **GitCloneAgent**
+* **GitCloneAgent  (Implemented using Crew)**
   Clones the GitHub repository and checks out the specific pull request branch.
   → Uses the `checkout_github_pr` tool to clone the repo and check out the PR branch using `git` commands.
 
-* **CodeDiffReviewAgent**
+* **CodeDiffReviewAgent (Implemented using Camel)**
   Analyzes the PR diff, identifies the changed function, maps it to the corresponding test function, and locates the test file path.
   → Uses the `get_pr_code_changes` tool built on top of the GitHub API via `PyGithub` to fetch the code diffs of the PR.
 
-* **UnitTestRunnerAgent**
+* **UnitTestRunnerAgent (Implemented using LangChain)**
   Runs the specified unit test using `pytest` and returns structured test results.
   → Uses three tools:
 
@@ -140,6 +140,7 @@ This is an early-stage prototype. Feedback and contributions are welcome.
 Discord: [https://discord.gg/cDzGHnzkwD](https://discord.gg/cDzGHnzkwD)
 
 ---
+
 
 
 
