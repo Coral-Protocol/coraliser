@@ -3,14 +3,11 @@ import os
 import json
 import logging
 import subprocess
-import sys
-import re
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_tool_calling_agent, AgentExecutor
 from langchain_core.tools import tool
-from langchain_ollama.chat_models import ChatOllama
 from dotenv import load_dotenv
 from anyio import ClosedResourceError
 import urllib.parse
@@ -150,7 +147,7 @@ async def create_unit_test_runner_agent(client, tools):
         3. Check if the message contains a project root and a list of filenames with code diffs.
         4. Extract the `project_root` and the list of `(filename, diff snippet)` pairs.
         5. Call `list_project_files(project_root)` to get all files in the project.
-        6. Filter out test files (e.g., in `tests/` folder or starting with `test_`).
+        6. Filter out test files related to the list of filenames with code diffs.
         7. Call `read_project_files(project_root, test_files)` to read their content.
         8. For each changed file, find related test files using name or import matching.
         9. For each test file, call `run_test(project_root, test_file_path)` to run tests.

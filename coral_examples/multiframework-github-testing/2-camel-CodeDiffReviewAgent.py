@@ -96,7 +96,7 @@ async def create_codediff_agent(toolkit):
 
     model = ModelFactory.create(
         model_platform=ModelPlatformType.OPENAI,
-        model_type=ModelType.GPT_4O_MINI,
+        model_type=ModelType.GPT_4_1,
         api_key=os.getenv("OPENAI_API_KEY"),
         model_config_dict={"temperature": 0.3, "max_tokens": 16000},
     )
