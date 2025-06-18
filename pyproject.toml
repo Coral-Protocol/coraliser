@@ -4,7 +4,8 @@ version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
     "langchain>=0.3.25",
-    "langchain-mcp-adapters==0.0.10",
+    "langchain-mcp-adapters==0.1.7",
     "dotenv==0.9.9",
-    "langchain-openai>=0.3.22"
+    "langchain-openai>=0.3.22",
+    "gradio>=5.34.1",
 ]
