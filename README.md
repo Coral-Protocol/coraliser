@@ -50,6 +50,8 @@ To develop a custom Coralised Agent that connects to the Coral Server as a clien
    - Update the model as needed to incorporate advancements or fine-tuning, ensuring it supports tool-calling and collaboration features required by the Coral Server.  
    - Test the model’s integration with the agent framework (e.g., LangChain’s `create_tool_calling_agent`) to confirm it processes inputs and tools correctly.
 
+   ![alt text](images/2.png)
+
 </details>  
 
 <details>
@@ -61,6 +63,12 @@ To develop a custom Coralised Agent that connects to the Coral Server as a clien
    - Include a tools description in the prompt (e.g., using `get_tools_description`) to inform the model of available Coral Server tools, and its own tools (if any) ensuring it knows how to use them for collaboration.  
    - Prevent the agent from prematurely ending the interaction by including instructions like “You MUST NEVER finish the chain” and looping back to ask the user for further input after each task.  
    - Validate that the prompt supports dynamic interaction with Coral Server tools, allowing the agent to adapt to varying user requests and agent responses.
+
+   **Prompt configuration**
+   ![alt text](images/3.png)
+
+   **Function to get tool description**
+   ![alt text](images/4.png)
 
 </details>  
 
@@ -75,6 +83,8 @@ To develop a custom Coralised Agent that connects to the Coral Server as a clien
    - Verify tool integration by logging the tools description (e.g., using `get_tools_description`) to confirm that all tools, their names, and schemas are correctly passed to the agent.  
    - Ensure the agent can select tools via the Coral Server’s discovery mechanism (e.g., tool registry or metadata service), which provides details on tool functionalities and access protocols.
 
+   ![alt text](images/5.png)
+
 </details>  
 
 <details> 
@@ -86,6 +96,8 @@ To develop a custom Coralised Agent that connects to the Coral Server as a clien
    - Use the `dotenv` library to load environment variables via `load_dotenv()` at the start of the program, ensuring secure and flexible configuration.  
    - Validate that all required environment variables are accessible during runtime, logging errors if any are missing and test connectivity in both local and Docker environments.
 
+   ![alt text](images/6.png)
+
 </details>  
 
 ## What is Coraliser?
@@ -94,15 +106,9 @@ Coraliser streamlines the adoption of Coral by automating the conversion of both
 
 Coraliser is a powerful tool that streamlines the integration of both MCP servers and standalone agents with the Coral Server. It automates the generation of Coral-compatible agents, eliminating the need for manual wiring or complex configurations.
 
-Coraliser currently includes the following components:
+The current Coraliser setup consists of the following component:
 
 - **mcp-coraliser**: Run coraliser.py with a `coraliser_settings.json` file that includes connection details for multiple MCP servers. The Coraliser attempts to connect to each MCP adaptor listed and automatically generates Coral-compatible agents for the ones that are reachable. If a connection fails for any MCP adaptor, it flags the issue and proceeds to the next available MCP, ensuring uninterrupted agent generation for all valid connections.
-
-- **agent-coraliser**: By providing an input agent in `.py` format and executing `coraliser.py`, Coraliser first validates whether the file contains a valid agent using a Language model. If it does, it generates a Coral-compatible version of that agent, ready to run within the Coral Server.
-
-The key difference between the MCP Coraliser and the Agent Coraliser lies in their scope. The MCP Coraliser creates Coralised agents by connecting to available MCP servers using adaptors—which are essentially connection commands defined in the json. Once connected, it reads all available tools from the MCP server and create coralised agents. These Coralised agents can then process prompts and execute actions using the connected MCP tools, all within the same Coral Server. 
-
-In contrast, the Agent Coraliser works by analyzing a given Python file to determine whether it defines a valid agent. If the file does not represent a compatible agent, it flags the issue. If it is valid, the Agent Coraliser generates a Coralised version of the agent, making it compatible with the Coral Protocol and ready to interact within the Coral ecosystem.
 
 ## Get Started for mcp-coraliser
 
@@ -133,32 +139,36 @@ cp -r .env_sample .env
 ```
 </details> 
 
-### 3. Setting Up and Running the MCP-Coraliser
+### 3. Build & Run Your MCP-Coralised Agent
 <details>
 
-1. **Update `coraliser_settings.json`**:  
-   Provide the connection details for your MCP server(s).
+   - Supply MCP Connection Details:
 
-2. **Run the MCP Coraliser**:
+      Create a JSON file named `coraliser_settings.json` in the root repository and define your MCP connection commands. Reference: ([coraliser_settings.json](./coraliser_settings.json))
 
-```bash
-   uv run utils/langchain/mcp-coraliser/coraliser.py
-```
+   - Generate Coralised Agent(s):
 
-This script validates connections and generates Coral-compatible agent scripts.
+      ```bash
+      uv run utils/langchain/mcp-coraliser/coraliser.py
+      ```
+      This script connects to MCP, retrieves tools, and generates Coral-compatible agent scripts like `firecrawl_coral_agent.py`.
 
-4. **Review the Generated Agents**:  
-   Check files like `firecrawl_coral_agent.py`, `github_coral_agent.py` to confirm they are configured correctly.
+</details> 
 
-5. **Run the Agents** (assuming your Coral Server is running):
+### 4. Review the Generated Agents  
+<details>
 
-```bash
-   uv run firecrawl_coral_agent.py
-```
+   - Check files `firecrawl_coral_agent.py`, `github_coral_agent.py` to confirm they are configured correctly.
 
-```bash
-   uv run github_coral_agent.py
-```
+   - Run the Agents (assuming your Coral Server is running):
+
+      ```bash
+         uv run firecrawl_coral_agent.py
+      ```
+
+      ```bash
+         uv run github_coral_agent.py
+      ```
 </details> 
 
 ## Get Started for agent-coraliser
@@ -193,25 +203,26 @@ cp -r .env_sample .env
 ### 3. Setting Up and Running the Agent-Coraliser
 <details>
 
-1. **Prepare the Input Agent**:  
-   Ensure you have a valid agent Python file (e.g., `agent_coraliser_sample_input.py`).
+   - Prepare the Input Agent:  
+      Ensure you have a valid agent Python file (e.g., `agent_coraliser_sample_input.py`).
 
-2. **Run the Agent Coraliser**:
+   - Run the Agent Coraliser:
 
-```bash
-   uv run utils/langchain/agent-coraliser/coraliser.py
-```
+      ```bash
+         uv run utils/langchain/agent-coraliser/coraliser.py
+      ```
 
-   (You’ll be prompted to enter the agent file name (including `.py` extension).)
+         (You’ll be prompted to enter the agent file name (including `.py` extension).)
 
-3. **Review the Generated Agent File**:  
-   Confirm the generated script matches your expectations.
+   - Review the Generated Agent File:  
+      Confirm the generated script matches your expectations.
 
-4. **Run the Agent**:
+   - Run the Agent:
 
-```bash
-uv run <generated_filename>.py
-```
+      ```bash
+      uv run <generated_filename>.py
+      ```
+
 </details>
 
 ## License
