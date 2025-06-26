@@ -1,9 +1,31 @@
 
-# Coraliser
+# Coral Agents
 
-Coraliser streamlines the adoption of Coral by automating the conversion of both MCP servers and standalone agents into Coral-compatible agents. Once integrated, these agents can seamlessly receive inputs from the Coral Server and invoke their tools as needed. This makes your multi-agent system more efficient, scalable, and ready for production use without additional configuration.
+## Introduction
+
+### AI Agents
+
+An AI agent within any given framework ([LangChain](https://github.com/langchain-ai/langchain), [Camel](https://github.com/camel-ai/camel), [CrewAi](https://github.com/crewAIInc/crewAI)) can be conceptualised as comprising three core components: model, prompts, and tools. Together, these components enable the AI agent to perceive, reason, and act within a framework, with the model processing data, prompts directing its focus, and tools facilitating real-world interactions.
+
+- **Model:** The model serves as the computational core, typically a machine learning system like a large language model or reinforcement learning algorithm, processing inputs to generate decisions or outputs. 
+
+-**Prompts:** Prompts act as the guiding interface, providing structured instructions or queries that shape the model’s behavior to align with specific goals, such as answering questions or executing tasks.
+
+- **Tools:** Tools extend the agent’s capabilities by enabling interaction with the external environment, such as fetching data via APIs, controlling hardware, or performing specialized computations.
+
+### MCP & AI Agent Frameworks
+
+After the launch of [Model Context Protocol (MCP)](https://github.com/modelcontextprotocol), most AI frameworks have adopted a client-based approach, enabling AI agents, acting as clients, to easily connect to a suite of powerful tools provided by the MCP server. These tools include standardised APIs that allow agents to interface with external systems, such as databases or web services, for seamless data retrieval and task execution specific to AI operations. Data exchange modules enable real-time data transfer, connecting agents to AI-relevant data sources, such as training datasets or live inference inputs. Task orchestration tools further enhance the system by coordinating synchronised actions, allowing AI agents to execute collaborative tasks efficiently within the multi-agent framework. 
+
+An AI agent determines which tools it can use through a discovery mechanism provided by the MCP server, typically involving a tool registry or metadata service that lists available tools, their functionalities, and access protocols, enabling the agent to select appropriate tools based on its task requirements and compatibility.
+
+### Coralised Agent
+
+A Coralised Agent is an AI agent developed within any given framework and configured to connect as a client to the [Coral Server](https://github.com/Coral-Protocol/coral-server), which is a MCP server. This connection enables the agent to access a robust set of tools provided by the Coral Server, enhancing its capabilities beyond those of its original framework. In addition to these server-provided tools, the Coralised Agent retains its native tools from its original framework, allowing it to combine the Coral Server’s advanced capabilities with its inherent functionalities. 
 
 ## What is Coraliser?
+
+Coraliser streamlines the adoption of Coral by automating the conversion of both MCP servers and standalone agents into Coral-compatible agents. Once integrated, these agents can seamlessly receive inputs from the Coral Server and invoke their tools as needed. This makes your multi-agent system more efficient, scalable, and ready for production use without additional configuration.
 
 Coraliser is a powerful tool that streamlines the integration of both MCP servers and standalone agents with the Coral Server. It automates the generation of Coral-compatible agents, eliminating the need for manual wiring or complex configurations.
 
@@ -93,6 +115,12 @@ This script validates connections and generates Coral-compatible agent scripts.
 uv run <generated_filename>.py
 ```
 </details>
+
+## Contribution Guidelines
+
+We welcome contributions! Email us at [hello@coralprotocol.org](mailto:hello@coralprotocol.org) or join our Discord [here](https://discord.gg/rMQc2uWXhj) to connect with the developer team. Feel free to open issues or submit pull requests.
+
+Thanks for checking out the project, we hope you like it!
 
 ## License
 
